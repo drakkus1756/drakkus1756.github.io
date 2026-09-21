@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoyalStory Starforce Calculator</title>
+
+    <script src="bootstrap.js"></script>
+    <script src="script.js"></script>
+
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container margin-bottom-footer">
+        <div class="container-fluid maincon">
+            <form onsubmit="return false">
+                <div class="col-sm-12 containOne">
+                    <p>Item Level: <input id="req_level" name="req_level" type="number" value="150"></p>
+                    <p>Auto Starforce: <select id="auto_starforce" name="auto_starforce">
+                        <option>Manual</option>
+                        <option>Automatic</option>
+                    </select></p>
+                    <p>NX per attempt: <select id="nx_cost" name="nx_cost">
+                        <option>Calculate All</option>
+                        <option>15,000</option>
+                        <option>300,000</option>
+                        <option>750,000</option>
+                        <option>3,000,000</option>
+                    </select></p>
+                </div>
+
+                <div class="col-sm-12 containOne">
+                    <p>Current Stars: <input type="number" id="current_stars" name="current_stars" value=0></p>
+                    <p>Target Stars: <input type="number" id="target_stars" name="target_stars" value=25></p>
+                </div>
+
+                <div class="col-sm-12 containOne">
+                    <p>Current manual 15,000 NX success %: <input type="number" id="lowest_success_chance" name="lowest_success_chance" value=50></p>
+                </div>
+
+                <div class="col-sm-12 containOne">
+                    <p>Number of trials: <input type="number" id="num_trials" name="num_trials" value=1000></p>
+                </div>
+
+                <div class="col-sm-12 containTwo">
+                    <button id="calculate_button" type="submit" class="btn btnSubmit">Calculate</button>
+                </div>
+            </form>
+
+            <div class="col-sm-12 containOne">
+                <p id="calculation_15000"></p>
+                <p id="calculation_300000"></p>
+                <p id="calculation_750000"></p>
+                <p id="calculation_3000000"></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
