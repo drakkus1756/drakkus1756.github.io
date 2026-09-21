@@ -19,44 +19,53 @@ function calculate() {
         upgradeChances = [lowestChance, lowestChance + 10, lowestChance + 20, lowestChance + 30]
     }
 
-    if (nxCost == 0) {
-        // Do something here later
-    }
-
     let outputString = "";
 
-    for (let i = 0; i < upgradeCosts.length; i++) {
-        let totalNxCost = 0;
-        let totalMesoCost = 0;
+    if (nxCost == 0) {
+        // Simulate all options
+        for (let i = 0; i < upgradeCosts.length; i++) {
+            outputString += simulateUpgrades(reqLevel, currentStars, targetStars, numTrials, upgradeCosts[i], upgradeChances[i]);
+        }
+    } else {
+        outputString += simulateUpgrades(reqLevel, currentStars, targetStars, numTrials, upgradeCosts[nxCost - 1], upgradeChances[nxCost - 1])
+    }
 
-        for (let j = 0; j < numTrials; j++) {
-            let upgradedStars = currentStars;
-            while (upgradedStars < targetStars) {
-                totalNxCost += upgradeCosts[i];
-                totalMesoCost += GetMesoCost(reqLevel, upgradedStars);
+    document.getElementById("output-window").textContent = outputString;
 
-                if ((Math.floor(Math.random() * 100) + 1) <= upgradeChances[i] - ((upgradedStars - currentStars) * 5)) {
-                    // Success!
-                    upgradedStars += 1;
-                } else {
-                    // Failed!
-                    // If current stars is divisible by 5, won't downgrade
-                    if (upgradedStars % 5 != 0) {
-                        upgradedStars -= 1;
-                    }
+
+}
+
+function simulateUpgrades(reqLevel, currentStars, targetStars, numTrials, upgradeCost, upgradeChance) {
+    
+    let totalNxCost = 0;
+    let totalMesoCost = 0;
+
+    for (let j = 0; j < numTrials; j++) {
+        let upgradedStars = currentStars;
+        while (upgradedStars < targetStars) {
+            totalNxCost += upgradeCost;
+            totalMesoCost += getMesoCost(reqLevel, upgradedStars);
+
+            if ((Math.floor(Math.random() * 100) + 1) <= upgradeChance - ((upgradedStars - currentStars) * 5)) {
+                // Success!
+                upgradedStars += 1;
+            } else {
+                // Failed!
+                // If current stars is divisible by 5, won't downgrade
+                if (upgradedStars % 5 != 0) {
+                    upgradedStars -= 1;
                 }
             }
         }
-        
-        const costStr = formatter.format(upgradeCosts[i]).padStart(9, ' ');
-        const nxStr = formatter.format(Math.round(totalNxCost/numTrials)).padStart(12, ' ');
-        const mesoStr = formatter.format(Math.round(totalMesoCost/numTrials)).padStart(14, ' ');
-        outputString += `${costStr} NX: NX cost: ${nxStr} | Meso cost: ${mesoStr}\n`;
     }
-    document.getElementById("output-window").textContent = outputString;
+    
+    const costStr = formatter.format(upgradeCost).padStart(9, ' ');
+    const nxStr = formatter.format(Math.round(totalNxCost/numTrials)).padStart(12, ' ');
+    const mesoStr = formatter.format(Math.round(totalMesoCost/numTrials)).padStart(14, ' ');
+    return `${costStr} NX: NX cost: ${nxStr} | Meso cost: ${mesoStr}\n`;
 }
 
-function GetMesoCost(reqLevel, currentStars) {
+function getMesoCost(reqLevel, currentStars) {
     if (currentStars < 10) {
         return 1000 + reqLevel ** 3 * (currentStars + 1) / 25
     } else if (currentStars < 15) {
