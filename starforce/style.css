@@ -146,3 +146,18 @@ body {
     white-space: pre-wrap;
     overflow-x: auto;
 }
+
+.ai-footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: auto; /* Ensures it pushes to bottom if layout grows */
+    border-top: 1px solid #2e2e3a;
+    width: 100%;
+}
+
+.ai-footer p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #636674; /* Muted gray so it doesn't distract from the simulator */
+    letter-spacing: 0.5px;
+}
