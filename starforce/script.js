@@ -1,68 +1,110 @@
-const formatter = new Intl.NumberFormat("en-US");
-
 function calculate() {
     let reqLevel = parseInt(document.getElementById("req_level").value);
     let autoStarforce = document.getElementById("auto_starforce").selectedIndex;
     let nxCost = document.getElementById("nx_cost").selectedIndex;
     let currentStars = parseInt(document.getElementById("current_stars").value);
     let targetStars = parseInt(document.getElementById("target_stars").value);
-    let lowestChance = parseInt(document.getElementById("lowest_success_chance").value);
     let numTrials = parseInt(document.getElementById("num_trials").value);
-    let outputs = [document.getElementById("calculation_15000"), document.getElementById("calculation_300000"), document.getElementById("calculation_750000"), document.getElementById("calculation_3000000")]
 
     let upgradeCosts = [15000, 300000, 750000, 3000000];
-    let upgradeChances = [];
-    if (autoStarforce) {
-        upgradeChances = [lowestChance - 5, lowestChance + 5, lowestChance + 15, lowestChance + 25]
-    }
-    else {
-        upgradeChances = [lowestChance, lowestChance + 10, lowestChance + 20, lowestChance + 30]
-    }
 
     let outputString = "";
+
+    if (targetStars > 25) {
+        // Max is 25!
+        targetStars = 25;
+    } else if (targetStars <= 0) {
+        targetStars = 1;
+    }
+
+    if (currentStars < 0) {
+        currentStars = 0;
+    } else if (currentStars > 24) {
+        currentStars = 24;
+    }
+
+    if (targetStars <= currentStars) {
+        targetStars = currentStars + 1;
+    }
+
+    // Update current/target stars
+    document.getElementById("current_stars").value = currentStars;
+    document.getElementById("target_stars").value = targetStars;
 
     if (nxCost == 0) {
         // Simulate all options
         for (let i = 0; i < upgradeCosts.length; i++) {
-            outputString += simulateUpgrades(reqLevel, currentStars, targetStars, numTrials, upgradeCosts[i], upgradeChances[i]);
+            outputString += simulateUpgrades(reqLevel, autoStarforce, currentStars, targetStars, numTrials, upgradeCosts[i], i);
         }
     } else {
-        outputString += simulateUpgrades(reqLevel, currentStars, targetStars, numTrials, upgradeCosts[nxCost - 1], upgradeChances[nxCost - 1])
+        outputString += simulateUpgrades(reqLevel, autoStarforce, currentStars, targetStars, numTrials, upgradeCosts[nxCost - 1], nxCost - 1);
     }
 
     document.getElementById("output-window").textContent = outputString;
-
-
 }
 
-function simulateUpgrades(reqLevel, currentStars, targetStars, numTrials, upgradeCost, upgradeChance) {
-    
+function simulateUpgrades(reqLevel, autoStarforce, currentStars, targetStars, numTrials, upgradeCost, nxOption) {
+    const formatter = new Intl.NumberFormat("en-US");
     let totalNxCost = 0;
     let totalMesoCost = 0;
+    let totalAttempts = 0;
+
+    
 
     for (let j = 0; j < numTrials; j++) {
         let upgradedStars = currentStars;
+        let failStreak = 0;
         while (upgradedStars < targetStars) {
             totalNxCost += upgradeCost;
             totalMesoCost += getMesoCost(reqLevel, upgradedStars);
+            totalAttempts++;
 
-            if ((Math.floor(Math.random() * 100) + 1) <= upgradeChance - ((upgradedStars - currentStars) * 5)) {
+            let upgradeChance = getUpgradeChance(upgradedStars, autoStarforce, nxOption);
+
+            if (failStreak >= 2 || (Math.floor(Math.random() * 100) + 1) <= upgradeChance) {
                 // Success!
-                upgradedStars += 1;
+                upgradedStars++;
+                failStreak = 0;
             } else {
                 // Failed!
                 // If current stars is divisible by 5, won't downgrade
                 if (upgradedStars % 5 != 0) {
-                    upgradedStars -= 1;
+                    upgradedStars--;
                 }
+                failStreak++;
             }
         }
     }
     
     const costStr = formatter.format(upgradeCost).padStart(9, ' ');
-    const nxStr = formatter.format(Math.round(totalNxCost/numTrials)).padStart(12, ' ');
+    const nxStr = formatter.format(Math.round(totalNxCost/numTrials)).padStart(11, ' ');
     const mesoStr = formatter.format(Math.round(totalMesoCost/numTrials)).padStart(14, ' ');
-    return `${costStr} NX: NX cost: ${nxStr} | Meso cost: ${mesoStr}\n`;
+    const attemptsStr = formatter.format(Math.round(totalAttempts/numTrials)).padStart(3, ' ');
+    return `${costStr} - NX: ${nxStr} | Meso: ${mesoStr} | Attempts: ${attemptsStr}\n`;
+}
+
+function getUpgradeChance(currentStars, autoStarforce, nxOption) {
+    // manual @ 15000 NX - will be currentStars - 1
+    const upgradeChances = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 45, 45, 40, 40, 40, 40, 35, 35, 35, 35, 35, 30];
+    let upgradeChance = upgradeChances[currentStars - 1];
+    if (autoStarforce) {
+        upgradeChance -= 5;
+    }
+
+    switch (nxOption) {
+        case 0:
+            return upgradeChance;
+        case 1:
+            return upgradeChance + 10;
+        case 2:
+            return upgradeChance + 20;
+        case 3:
+            return upgradeChance + 30;
+        default:
+            console.error("Something went wrong with getting the upgrade chance!! Defaulting to " + upgradeChance);
+            return upgradeChance;
+    }
+
 }
 
 function getMesoCost(reqLevel, currentStars) {

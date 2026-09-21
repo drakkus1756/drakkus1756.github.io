@@ -46,20 +46,16 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="current_stars">Current Stars</label>
-                        <input type="number" id="current_stars" name="current_stars" value="0">
+                        <input type="number" id="current_stars" name="current_stars" min=0 max=24 value="0">
                     </div>
                     <div class="form-group">
                         <label for="target_stars">Target Stars</label>
-                        <input type="number" id="target_stars" name="target_stars" value="25">
+                        <input type="number" id="target_stars" name="target_stars" min= 1 max=25 value="25">
                     </div>
                 </div>
 
-                <!-- Group 3: Percent & Trials -->
+                <!-- Group 3: Trials -->
                 <div class="form-grid split-two">
-                    <div class="form-group">
-                        <label for="lowest_success_chance">Current manual 15,000 NX success %</label>
-                        <input type="number" id="lowest_success_chance" name="lowest_success_chance" value="50">
-                    </div>
                     <div class="form-group">
                         <label for="num_trials">Number of trials</label>
                         <input type="number" id="num_trials" name="num_trials" value="1000">
