@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoyalStory Starforce Calculator</title>
+    <title>Starforce Simulator for RoyalStory</title>
 
     <script src="bootstrap.js"></script>
     <script src="script.js"></script>
@@ -13,46 +13,70 @@
 </head>
 <body>
     <div class="container margin-bottom-footer">
-        <div class="container-fluid maincon">
-            <form onsubmit="return false">
-                <div class="col-sm-12 containOne">
-                    <p>Item Level: <input id="req_level" name="req_level" type="number" value="150"></p>
-                    <p>Auto Starforce: <select id="auto_starforce" name="auto_starforce">
-                        <option>Manual</option>
-                        <option>Automatic</option>
-                    </select></p>
-                    <p>NX per attempt: <select id="nx_cost" name="nx_cost">
-                        <option>Calculate All</option>
-                        <option>15,000</option>
-                        <option>300,000</option>
-                        <option>750,000</option>
-                        <option>3,000,000</option>
-                    </select></p>
+        <div class="maincon">
+            <h2 class="calculator-title">Starforce Simulator for RoyalStory</h2>
+            
+            <form onsubmit="return false" class="calc-form">
+                <!-- Group 1: Configuration -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="req_level">Item Level</label>
+                        <input id="req_level" name="req_level" type="number" value="150">
+                    </div>
+                    <div class="form-group">
+                        <label for="auto_starforce">Auto Starforce</label>
+                        <select id="auto_starforce" name="auto_starforce">
+                            <option>Manual</option>
+                            <option>Automatic</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nx_cost">NX per attempt</label>
+                        <select id="nx_cost" name="nx_cost">
+                            <option>Calculate All</option>
+                            <option>15,000</option>
+                            <option>300,000</option>
+                            <option>750,000</option>
+                            <option>3,000,000</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="col-sm-12 containOne">
-                    <p>Current Stars: <input type="number" id="current_stars" name="current_stars" value=0></p>
-                    <p>Target Stars: <input type="number" id="target_stars" name="target_stars" value=25></p>
+                <!-- Group 2: Stars -->
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="current_stars">Current Stars</label>
+                        <input type="number" id="current_stars" name="current_stars" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="target_stars">Target Stars</label>
+                        <input type="number" id="target_stars" name="target_stars" value="25">
+                    </div>
                 </div>
 
-                <div class="col-sm-12 containOne">
-                    <p>Current manual 15,000 NX success %: <input type="number" id="lowest_success_chance" name="lowest_success_chance" value=50></p>
+                <!-- Group 3: Percent & Trials -->
+                <div class="form-grid split-two">
+                    <div class="form-group">
+                        <label for="lowest_success_chance">Current manual 15,000 NX success %</label>
+                        <input type="number" id="lowest_success_chance" name="lowest_success_chance" value="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="num_trials">Number of trials</label>
+                        <input type="number" id="num_trials" name="num_trials" value="1000">
+                    </div>
                 </div>
 
-                <div class="col-sm-12 containOne">
-                    <p>Number of trials: <input type="number" id="num_trials" name="num_trials" value=1000></p>
-                </div>
-
-                <div class="col-sm-12 containTwo">
-                    <button id="calculate_button" type="submit" class="btn btnSubmit">Calculate</button>
+                <!-- Submit Button -->
+                <div class="button-container">
+                    <button id="calculate_button" type="submit" class="btn btnSubmit">Simulate Runs</button>
                 </div>
             </form>
 
-            <div class="col-sm-12 containOne">
-                <p id="calculation_15000"></p>
-                <p id="calculation_300000"></p>
-                <p id="calculation_750000"></p>
-                <p id="calculation_3000000"></p>
+            <!-- Results Output Window -->
+            <div class="results-container">
+                <h3>Results</h3>
+                <!-- The <pre> tag guarantees your JavaScript padding strings line up perfectly -->
+                <pre id="output-window">Waiting for simulation...</pre>
             </div>
         </div>
     </div>

@@ -51,11 +51,9 @@ function calculate() {
         const costStr = formatter.format(upgradeCosts[i]).padStart(9, ' ');
         const nxStr = formatter.format(Math.round(totalNxCost/numTrials)).padStart(12, ' ');
         const mesoStr = formatter.format(Math.round(totalMesoCost/numTrials)).padStart(14, ' ');
-        outputs[i].textContent = `${costStr} NX: NX cost: ${nxStr} | Meso cost: ${mesoStr}`;
+        outputString += `${costStr} NX: NX cost: ${nxStr} | Meso cost: ${mesoStr}\n`;
     }
-
-    //document.getElementById("calculation_output").innerHTML = outputString;
-    //console.info(outputString);
+    document.getElementById("output-window").textContent = outputString;
 }
 
 function GetMesoCost(reqLevel, currentStars) {
