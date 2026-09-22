@@ -1,2 +1,2 @@
 # drakkus1756.github.io
-Calculator for starforcing costs
+I might make some cool stuff eventually :)
