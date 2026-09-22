@@ -10,18 +10,11 @@ function calculate() {
 
     let outputString = "";
 
-    if (targetStars > 25) {
-        // Max is 25!
-        targetStars = 25;
-    } else if (targetStars <= 0) {
-        targetStars = 1;
-    }
+    // Cap targetStars to 25
+    targetStars = Math.min(targetStars, 25);
 
-    if (currentStars < 0) {
-        currentStars = 0;
-    } else if (currentStars > 24) {
-        currentStars = 24;
-    }
+    // Clamp currentStars to 0-24
+    currentStars = Math.max(0, Math.min(currentStars, 24));
 
     if (targetStars <= currentStars) {
         targetStars = currentStars + 1;
@@ -90,30 +83,18 @@ function getUpgradeChance(currentStars, autoStarforce, nxOption) {
     if (autoStarforce) {
         upgradeChance -= 5;
     }
-
-    switch (nxOption) {
-        case 0:
-            return upgradeChance;
-        case 1:
-            return upgradeChance + 10;
-        case 2:
-            return upgradeChance + 20;
-        case 3:
-            return upgradeChance + 30;
-        default:
-            console.error("Something went wrong with getting the upgrade chance!! Defaulting to " + upgradeChance);
-            return upgradeChance;
-    }
+    
+    return upgradeChance + 10 * nxOption;
 
 }
 
 function getMesoCost(reqLevel, currentStars) {
     if (currentStars < 10) {
-        return 1000 + reqLevel ** 3 * (currentStars + 1) / 25
+        return 1000 + reqLevel ** 3 * (currentStars + 1) / 25;
     } else if (currentStars < 15) {
-        return 1000 + reqLevel ** 3 * (currentStars + 1) ** 2.7 / 400
+        return 1000 + reqLevel ** 3 * (currentStars + 1) ** 2.7 / 400;
     } else {
-        return 1000+ reqLevel ** 3 * (currentStars + 1) ** 2.7 / 200
+        return 1000 + reqLevel ** 3 * (currentStars + 1) ** 2.7 / 200;
     }
 }
 
