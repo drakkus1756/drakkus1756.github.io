@@ -76,7 +76,7 @@ function simulateUpgrades(reqLevel, autoStarforce, currentStars, targetStars, nu
 
 function getUpgradeChance(currentStars, autoStarforce, nxOption) {
     // manual @ 15000 NX - will be currentStars - 1
-    const upgradeChances = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 45, 45, 40, 40, 40, 40, 35, 35, 35, 35, 30, 25]; // Unsure on last 24->25, guessing 25%
+    const upgradeChances = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 45, 45, 40, 40, 40, 40, 35, 35, 35, 35, 30, 20];
     let upgradeChance = upgradeChances[currentStars - 1];
     if (autoStarforce) {
         upgradeChance -= 5;
