@@ -16,7 +16,7 @@ body {
 }
 
 /* The Calculator Card (now blends seamlessly with slightly lighter panels) */
-.maincon {
+.main-con {
     width: 100%;
     max-width: 750px;
     margin: 2rem 1rem;

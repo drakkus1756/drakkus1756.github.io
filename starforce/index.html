@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container margin-bottom-footer">
-        <div class="maincon">
+        <div class="main-con">
             <h2 class="calculator-title">Starforce Simulator for RoyalStory</h2>
             
             <form onsubmit="return false" class="calc-form">
@@ -21,18 +21,18 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="req_level">Item Level</label>
-                        <input id="req_level" name="req_level" type="number" value="150">
+                        <input id="req_level" type="number" value="150">
                     </div>
                     <div class="form-group">
                         <label for="auto_starforce">Auto Starforce</label>
-                        <select id="auto_starforce" name="auto_starforce">
+                        <select id="auto_starforce">
                             <option>Manual</option>
                             <option>Automatic</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="nx_cost">NX per attempt</label>
-                        <select id="nx_cost" name="nx_cost">
+                        <select id="nx_cost">
                             <option>Calculate All</option>
                             <option>15,000</option>
                             <option>300,000</option>
@@ -46,19 +46,19 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="current_stars">Current Stars</label>
-                        <input type="number" id="current_stars" name="current_stars" min=0 max=24 value="0">
+                        <input type="number" id="current_stars" min=0 max=24 value="0">
                     </div>
                     <div class="form-group">
                         <label for="target_stars">Target Stars</label>
-                        <input type="number" id="target_stars" name="target_stars" min= 1 max=25 value="25">
+                        <input type="number" id="target_stars" min= 1 max=25 value="25">
                     </div>
                 </div>
 
                 <!-- Group 3: Trials -->
-                <div class="form-grid split-two">
+                <div class="form-grid">
                     <div class="form-group">
                         <label for="num_trials">Number of trials</label>
-                        <input type="number" id="num_trials" name="num_trials" value="1000">
+                        <input type="number" id="num_trials" value="1000">
                     </div>
                 </div>
 
@@ -78,6 +78,7 @@
     </div>
     <footer class="ai-footer">
         <p>This page's design and layout was created with the assistance of AI.</p>
+        <p>Not affiliated with RoyalStory or it's developers :)</p>
     </footer>
 </body>
 </html>
